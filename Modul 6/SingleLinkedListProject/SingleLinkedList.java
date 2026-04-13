@@ -29,7 +29,7 @@ public class SingleLinkedList {
         size++;
     }
 
-        /*Node findNode(Object data) {
+        Node findNode(Object data) {
             Node current = head;
             while (current != null) {
                 if (current.data.equals(data))
@@ -37,7 +37,7 @@ public class SingleLinkedList {
                 current = current.next;
             }
             return null;
-        }*/
+        }
 
         void printList() {
             Node current = head;
@@ -75,20 +75,23 @@ public class SingleLinkedList {
         }
 
         void remove(Object data) {
-            if (isEmpty()) return; 
-            
+            if (isEmpty())
+                return;
+
             if (head.data.equals(data)) {
-                head = head.next; 
-                if (head == null) tail = null; 
+                head = head.next;
+                if (head == null)
+                    tail = null;
                 size--;
                 return;
             }
-            
+
             Node current = head;
             while (current.next != null) {
-                if (current.next.data.equals(data)) { 
-                    current.next = current.next.next; 
-                    if (current.next == null) tail = current; 
+                if (current.next.data.equals(data)) {
+                    current.next = current.next.next;
+                    if (current.next == null)
+                        tail = current;
                     size--;
                     return;
                 }
@@ -96,20 +99,72 @@ public class SingleLinkedList {
             }
         }
 
+        void insertAt(int index, Node data) {
+            if (index < 0 || index > size)
+                return;
+
+            if (index == 0) {
+                addFirst(data);
+            } else if (index == size) {
+                addLast(data);
+            } else {
+                Node prev = findNodeAt(index - 1);
+                data.next = prev.next;
+                prev.next = data;
+                size++;
+            }
+        }
+
+        void insertAfter(Object key, Node data) {
+            Node current = findNode(key);
+
+            if (current != null) {
+                data.next = current.next;
+                current.next = data;
+
+                if (current == tail)
+                    tail = data;
+                size++;
+            } else {
+                System.out.println("Node (  " + key + ") Could not be found");
+            }
+        }
+        
+        void insertBefore(Object key, Node data) {
+            if (isEmpty()) return;
+            
+            if (head.data.equals(key)) {
+                addFirst(data);
+                return;
+            }
+            
+            Node current = head;
+            while (current.next != null) {
+                if (current.next.data.equals(key)) {
+                    data.next = current.next;
+                    current.next = data;
+                    size++;
+                    return;
+                }
+                current = current.next;
+            }
+            System.out.println("Node (  " + key + ") Could not be found");
+        }
+
         public static void main(String[] args) {
             SingleLinkedList list = new SingleLinkedList();
 
             list.addLast(new Node("A"));
             list.addLast(new Node("B"));
-            list.addLast(new Node("C"));
+            // list.addLast(new Node("C"));
             list.addLast(new Node("D"));
 
-            System.out.println("Delete C (Mid) : ");
-            list.remove("C");
+            System.out.println("Sisipkan C sebelum 'B'");
+            list.insertBefore("B", new Node("C"));
             System.out.print("Hasil List : ");
             list.printList(); 
 
-            System.out.println("Delete A (Head) :");
+            /*System.out.println("Delete A (Head) :");
             list.remove("A");
             System.out.print("Hasil List : ");
             list.printList(); 
@@ -117,7 +172,7 @@ public class SingleLinkedList {
             System.out.println("Delete Z (Tidak ada di list):");
             list.remove("Z");
             System.out.print("Hasil List : ");
-            list.printList(); 
+            list.printList();*/ 
             
             /*System.out.println("Delete data index 2 : ");
             list.removeAt(2);
