@@ -85,7 +85,7 @@ public class BinaryTree {
             tree.add(nilai);
         }*/
 
-        //System.out.println("Tinggi tree : " + tree.height(tree.root));
+        System.out.println("Tinggi tree : " + tree.height(tree.root));
         //System.out.println("Jumlah daun : " + tree.countLeaves(tree.root));
         //System.out.println("Jumlah node : " + tree.countNodes(tree.root));
 
